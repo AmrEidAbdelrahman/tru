@@ -10,13 +10,22 @@ from core_manager.utils import validate_and_extract_national_id
 
 
 class NationalIDRateThrottle(throttling.UserRateThrottle):
+    """Custom rate throttle for national ID validation endpoint."""
     scope = 'national_id'
 
 class NationalIDValidatorView(APIView):
+    """
+    API endpoint for validating and extracting information from Egyptian national IDs.
+    Requires API key authentication and is rate-limited per key.
+    """
     permission_classes = [HasAPIKey]
     throttle_classes = [NationalIDRateThrottle]
 
     def post(self, request):
+        """
+        Validate the provided national ID and extract information if valid.
+        Logs each API call with the result and associated API key.
+        """
         key = request.META["HTTP_AUTHORIZATION"].split()[1]
         api_key = APIKey.objects.get_from_key(key)
         national_id = request.data.get('national_id')

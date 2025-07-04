@@ -2,6 +2,10 @@ import datetime
 
 
 def validate_and_extract_national_id(national_id):
+    """
+    Validate an Egyptian national ID and extract birthdate, governorate code, and gender if valid.
+    Returns a dict with is_valid, error message, and extracted data (if valid).
+    """
     if not national_id or not national_id.isdigit() or len(national_id) != 14:
         return {'is_valid': False, 'error': 'National ID must be 14 digits.', 'data': None}
     try:
@@ -24,5 +28,4 @@ def validate_and_extract_national_id(national_id):
         }
         return {'is_valid': True, 'error': None, 'data': data}
     except Exception as e:
-        print(e)
         return {'is_valid': False, 'error': 'Invalid national ID format.', 'data': None}

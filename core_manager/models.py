@@ -4,6 +4,10 @@ from rest_framework_api_key.models import APIKey
 # Create your models here.
 
 class APICallLog(models.Model):
+    """
+    Model to log each API call to the national ID validator endpoint.
+    Stores timestamp, API key, national ID, validation result, extracted data, and response status.
+    """
     timestamp = models.DateTimeField(auto_now_add=True)
     api_key = models.ForeignKey(APIKey, on_delete=models.SET_NULL, null=True, blank=True)
     national_id = models.CharField(max_length=14)
